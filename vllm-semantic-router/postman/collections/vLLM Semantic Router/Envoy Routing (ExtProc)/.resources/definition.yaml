@@ -1,0 +1,4 @@
+$kind: collection
+description: Requests go through Envoy, which calls vSR via gRPC ExtProc for
+  routing decisions. Check response HEADERS for x-vsr-* fields.
+order: 2000

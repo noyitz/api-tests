@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{api_base_url}}/api/v1/classify/fact-check"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "text": "The Earth is flat and the moon is made of cheese"
+    }
+order: 4000

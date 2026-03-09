@@ -1,0 +1,12 @@
+# Use this workspace to collaborate
+workspace:
+  id: 233ffed1-2801-44ef-86ce-41109be75093
+
+localResources:
+  collections:
+    - ../vsr-collection.postman_collection.json
+  environments:
+    - ../vsr-environment.postman_environment.json
+cloudResources:
+  collections:
+    ../postman/collections/vLLM Semantic Router: 02c0c7c7-ee34-4e39-9a21-9baf756c664f

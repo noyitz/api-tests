@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{envoy_base_url}}/v1/chat/completions"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: >-
+    {
+      "model": "auto",
+      "messages": [
+        {"role": "user", "content": "What is the speed of light and why is it important in physics?"}
+      ]
+    }
+order: 4000

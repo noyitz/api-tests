@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{api_base_url}}/api/v1/classify/intent"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "text": "What is machine learning?"
+    }
+order: 1000

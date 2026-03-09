@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{api_base_url}}/info/classifier"
+method: GET
+order: 3000

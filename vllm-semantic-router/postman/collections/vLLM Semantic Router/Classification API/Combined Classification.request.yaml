@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{api_base_url}}/api/v1/classify/combined"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "text": "Calculate the derivative of x^2 + 3x"
+    }
+order: 6000

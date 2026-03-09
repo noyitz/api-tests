@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{api_base_url}}/config/router"
+method: GET
+order: 2000

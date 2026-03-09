@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{api_base_url}}/config/classification"
+method: GET
+order: 1000

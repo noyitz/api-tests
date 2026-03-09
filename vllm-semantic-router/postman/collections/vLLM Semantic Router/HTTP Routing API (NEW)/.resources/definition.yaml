@@ -1,0 +1,4 @@
+$kind: collection
+description: New HTTP REST routing API (Workstream 2). Returns routing decisions
+  as JSON instead of headers. Used by BBR/IGW integration.
+order: 7000

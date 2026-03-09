@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{api_base_url}}/api/v1/eval"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "text": "Write a Python function to sort a list"
+    }
+order: 5000

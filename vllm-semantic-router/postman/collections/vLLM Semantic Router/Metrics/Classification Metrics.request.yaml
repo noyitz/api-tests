@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{api_base_url}}/metrics/classification"
+method: GET
+order: 1000

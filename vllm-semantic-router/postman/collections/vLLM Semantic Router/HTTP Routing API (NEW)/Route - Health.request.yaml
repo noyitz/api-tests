@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{routing_api_base_url}}/health"
+method: GET
+order: 1000

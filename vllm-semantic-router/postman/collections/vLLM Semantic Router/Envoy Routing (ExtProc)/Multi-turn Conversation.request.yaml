@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{envoy_base_url}}/v1/chat/completions"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "model": "auto",
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "What is machine learning?"},
+        {"role": "assistant", "content": "Machine learning is a subset of AI."},
+        {"role": "user", "content": "Can you give me a Python example?"}
+      ]
+    }
+order: 6000

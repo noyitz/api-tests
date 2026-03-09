@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{routing_api_base_url}}/v1/route"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: >-
+    {
+      "model": "auto",
+      "messages": [
+        {"role": "user", "content": "Write a Python function to sort a list using quicksort"}
+      ]
+    }
+order: 3000

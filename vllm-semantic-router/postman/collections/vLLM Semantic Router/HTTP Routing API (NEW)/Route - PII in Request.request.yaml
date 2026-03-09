@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{routing_api_base_url}}/v1/route"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: >-
+    {
+      "model": "auto",
+      "messages": [
+        {"role": "user", "content": "My email is john@example.com and SSN is 123-45-6789. Can you help me write a cover letter?"}
+      ]
+    }
+order: 6000
