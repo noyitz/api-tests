@@ -1,5 +1,5 @@
 $kind: http-request
-url: "{{routing_api_base_url}}/v1/route"
+url: "{{api_base_url}}/v1/route"
 method: POST
 headers:
   Content-Type: application/json
