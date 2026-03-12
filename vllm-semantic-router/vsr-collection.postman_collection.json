@@ -493,6 +493,120 @@
           }
         }
       ]
+    },
+    {
+      "name": "HTTP Routing - Model Selection & API Translation",
+      "description": "Tests for /v1/route with request mutations (body + header translation). Model-A is OpenAI format, Model-B is Anthropic format. Includes response translation via /v1/route/translate-response.",
+      "item": [
+        {
+          "name": "Direct Model-A (OpenAI, no translation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"Model-A\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, which model am I talking to?\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route"]
+            }
+          }
+        },
+        {
+          "name": "Direct Model-B (Anthropic, with body+header translation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"Model-B\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, which model am I talking to?\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route"]
+            }
+          }
+        },
+        {
+          "name": "Auto → Model-A (Math, OpenAI)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"auto\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"What is 2+2? Solve step by step.\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route"]
+            }
+          }
+        },
+        {
+          "name": "Auto → Model-B (Law, Anthropic)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"auto\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Explain the elements of a contract under common law and give a simple example.\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route"]
+            }
+          }
+        },
+        {
+          "name": "Translate Response - Anthropic to OpenAI",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_format\": \"anthropic\",\n  \"model\": \"Model-B\",\n  \"response_body\": {\n    \"id\": \"msg-mock-123\",\n    \"type\": \"message\",\n    \"role\": \"assistant\",\n    \"content\": [{\"type\": \"text\", \"text\": \"Contract law governs agreements between parties.\"}],\n    \"model\": \"Model-B\",\n    \"stop_reason\": \"end_turn\",\n    \"usage\": {\"input_tokens\": 10, \"output_tokens\": 20}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route/translate-response",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route", "translate-response"]
+            }
+          }
+        },
+        {
+          "name": "Translate Response - OpenAI passthrough",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_format\": \"openai\",\n  \"model\": \"Model-A\",\n  \"response_body\": {\n    \"id\": \"cmpl-mock-123\",\n    \"object\": \"chat.completion\",\n    \"model\": \"Model-A\",\n    \"choices\": [{\"index\": 0, \"message\": {\"role\": \"assistant\", \"content\": \"4\"}, \"finish_reason\": \"stop\"}]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route/translate-response",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route", "translate-response"]
+            }
+          }
+        }
+      ]
     }
   ]
 }
