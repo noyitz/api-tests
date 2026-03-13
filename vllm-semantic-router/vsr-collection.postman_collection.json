@@ -37,14 +37,16 @@
     },
     {
       "name": "Envoy Routing (ExtProc)",
-      "description": "Requests go through Envoy, which calls vSR via gRPC ExtProc for routing decisions. Check response HEADERS for x-vsr-* fields.",
+      "description": "Requests go through Envoy, which calls vSR via gRPC ExtProc for routing decisions. Check response HEADERS for x-vsr-* fields. Auth headers are required when authz role_bindings are configured.",
       "item": [
         {
-          "name": "Auto Route - Math Question",
+          "name": "team-a Auto Route via Envoy",
           "request": {
             "method": "POST",
             "header": [
-              {"key": "Content-Type", "value": "application/json"}
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "x-authz-user-id", "value": "alice"},
+              {"key": "x-authz-user-groups", "value": "team-a"}
             ],
             "body": {
               "mode": "raw",
@@ -58,15 +60,17 @@
           }
         },
         {
-          "name": "Auto Route - Code Question",
+          "name": "Direct openai-model via Envoy",
           "request": {
             "method": "POST",
             "header": [
-              {"key": "Content-Type", "value": "application/json"}
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "x-authz-user-id", "value": "alice"},
+              {"key": "x-authz-user-groups", "value": "team-a"}
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"model\": \"auto\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Write a Python function to sort a list using quicksort\"}\n  ]\n}"
+              "raw": "{\n  \"model\": \"openai-model\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, which model am I talking to?\"}\n  ]\n}"
             },
             "url": {
               "raw": "{{envoy_base_url}}/v1/chat/completions",
@@ -76,65 +80,13 @@
           }
         },
         {
-          "name": "Auto Route - Business Question",
+          "name": "Multi-turn Conversation via Envoy",
           "request": {
             "method": "POST",
             "header": [
-              {"key": "Content-Type", "value": "application/json"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"model\": \"auto\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Explain the elements of a contract under common law and give a simple example.\"}\n  ]\n}"
-            },
-            "url": {
-              "raw": "{{envoy_base_url}}/v1/chat/completions",
-              "host": ["{{envoy_base_url}}"],
-              "path": ["v1", "chat", "completions"]
-            }
-          }
-        },
-        {
-          "name": "Auto Route - Science Question",
-          "request": {
-            "method": "POST",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"model\": \"auto\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"What is the speed of light and why is it important in physics?\"}\n  ]\n}"
-            },
-            "url": {
-              "raw": "{{envoy_base_url}}/v1/chat/completions",
-              "host": ["{{envoy_base_url}}"],
-              "path": ["v1", "chat", "completions"]
-            }
-          }
-        },
-        {
-          "name": "Direct Model - Model-A",
-          "request": {
-            "method": "POST",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"model\": \"Model-A\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, which model am I talking to?\"}\n  ]\n}"
-            },
-            "url": {
-              "raw": "{{envoy_base_url}}/v1/chat/completions",
-              "host": ["{{envoy_base_url}}"],
-              "path": ["v1", "chat", "completions"]
-            }
-          }
-        },
-        {
-          "name": "Multi-turn Conversation",
-          "request": {
-            "method": "POST",
-            "header": [
-              {"key": "Content-Type", "value": "application/json"}
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "x-authz-user-id", "value": "alice"},
+              {"key": "x-authz-user-groups", "value": "team-a"}
             ],
             "body": {
               "mode": "raw",
