@@ -559,6 +559,42 @@
           }
         },
         {
+          "name": "Direct openai-model (skip routing)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"openai-model\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, I specified the model directly\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route"]
+            }
+          }
+        },
+        {
+          "name": "Direct anthropic-model (skip routing, with translation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"anthropic-model\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, I specified the model directly\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route"]
+            }
+          }
+        },
+        {
           "name": "team-b user - translate Anthropic response",
           "request": {
             "method": "POST",
