@@ -499,6 +499,84 @@
           }
         }
       ]
+    },
+    {
+      "name": "Authz-Based Routing (Modelless)",
+      "description": "Authorization-based multi-vendor routing. Routes by user group membership, not semantic classification. No ML models deployed.\n\nteam-a → openai-model (no translation)\nteam-b → anthropic-model (body+header translation)\nunknown → openai-model (default)",
+      "item": [
+        {
+          "name": "team-a user → openai-model",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"auto\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, route me based on my group\"}\n  ],\n  \"metadata\": {\n    \"headers\": {\n      \"x-authz-user-id\": \"alice\",\n      \"x-authz-user-groups\": \"team-a\"\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route"]
+            }
+          }
+        },
+        {
+          "name": "team-b user → anthropic-model (with translation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"auto\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, route me based on my group\"}\n  ],\n  \"metadata\": {\n    \"headers\": {\n      \"x-authz-user-id\": \"bob\",\n      \"x-authz-user-groups\": \"team-b\"\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route"]
+            }
+          }
+        },
+        {
+          "name": "unknown user → default openai-model",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"auto\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, I have no group\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route"]
+            }
+          }
+        },
+        {
+          "name": "team-b user - translate Anthropic response",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_format\": \"anthropic\",\n  \"model\": \"anthropic-model\",\n  \"response_body\": {\n    \"id\": \"msg-mock-123\",\n    \"type\": \"message\",\n    \"role\": \"assistant\",\n    \"content\": [{\"type\": \"text\", \"text\": \"Hello from Anthropic model\"}],\n    \"model\": \"anthropic-model\",\n    \"stop_reason\": \"end_turn\",\n    \"usage\": {\"input_tokens\": 10, \"output_tokens\": 8}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{api_base_url}}/v1/route/translate-response",
+              "host": ["{{api_base_url}}"],
+              "path": ["v1", "route", "translate-response"]
+            }
+          }
+        }
+      ]
     }
   ]
 }
