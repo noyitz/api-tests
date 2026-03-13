@@ -5,11 +5,11 @@ headers:
   Content-Type: application/json
 body:
   type: text
-  content: >-
+  content: |-
     {
-      "model": "auto",
+      "model": "Model-B",
       "messages": [
-        {"role": "user", "content": "Write a Python function to sort a list using quicksort"}
+        {"role": "user", "content": "Hello, which model am I talking to?"}
       ]
     }
-order: 3000
+order: 2000

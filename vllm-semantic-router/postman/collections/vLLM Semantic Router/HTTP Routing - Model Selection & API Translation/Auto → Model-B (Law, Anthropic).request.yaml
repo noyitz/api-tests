@@ -9,7 +9,7 @@ body:
     {
       "model": "auto",
       "messages": [
-        {"role": "user", "content": "My email is john@example.com and SSN is 123-45-6789. Can you help me write a cover letter?"}
+        {"role": "user", "content": "Explain the elements of a contract under common law and give a simple example."}
       ]
     }
-order: 6000
+order: 4000

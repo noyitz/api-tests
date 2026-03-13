@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{api_base_url}}/v1/route/translate-response"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: >-
+    {
+      "api_format": "anthropic",
+      "model": "Model-B",
+      "response_body": {
+        "id": "msg-mock-123",
+        "type": "message",
+        "role": "assistant",
+        "content": [{"type": "text", "text": "Contract law governs agreements between parties."}],
+        "model": "Model-B",
+        "stop_reason": "end_turn",
+        "usage": {"input_tokens": 10, "output_tokens": 20}
+      }
+    }
+order: 5000

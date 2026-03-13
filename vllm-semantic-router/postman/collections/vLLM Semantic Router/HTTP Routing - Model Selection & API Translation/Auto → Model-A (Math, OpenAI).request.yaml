@@ -9,7 +9,7 @@ body:
     {
       "model": "auto",
       "messages": [
-        {"role": "user", "content": "What is 2+2?"}
+        {"role": "user", "content": "What is 2+2? Solve step by step."}
       ]
     }
-order: 2000
+order: 3000

@@ -7,6 +7,8 @@ localResources:
     - ../vsr-collection.postman_collection.json
   environments:
     - ../vsr-environment.postman_environment.json
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
 cloudResources:
   collections:
-    ../postman/collections/vLLM Semantic Router: 02c0c7c7-ee34-4e39-9a21-9baf756c664f
+    ../postman/collections/vLLM Semantic Router: 12bff561-0e0a-4861-a2f5-a6c18638adc9

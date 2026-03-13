@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{api_base_url}}/v1/route/translate-response"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: >-
+    {
+      "api_format": "openai",
+      "model": "Model-A",
+      "response_body": {
+        "id": "cmpl-mock-123",
+        "object": "chat.completion",
+        "model": "Model-A",
+        "choices": [{"index": 0, "message": {"role": "assistant", "content": "4"}, "finish_reason": "stop"}]
+      }
+    }
+order: 6000

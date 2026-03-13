@@ -1,9 +1,15 @@
 $kind: collection
-description: |-
+description: >-
   API tests for vLLM Semantic Router (vSR).
 
+
   Set the environment variables:
+
   - `api_base_url`: Classification API route
+
   - `envoy_base_url`: Envoy proxy route (chat completions)
+
   - `metrics_base_url`: Prometheus metrics route
-  - `routing_api_base_url`: (DEPRECATED - routing API is now served on api_base_url)
+
+  - `routing_api_base_url`: (DEPRECATED - routing API is now served on
+  api_base_url)
