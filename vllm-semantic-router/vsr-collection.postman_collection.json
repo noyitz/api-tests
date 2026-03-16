@@ -519,7 +519,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"model\": \"openai-model\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, I specified the model directly\"}\n  ]\n}"
+              "raw": "{\n  \"model\": \"openai-model\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, I specified the model directly\"}\n  ],\n  \"metadata\": {\n    \"headers\": {\n      \"x-authz-user-id\": \"alice\",\n      \"x-authz-user-groups\": \"team-a\"\n    }\n  }\n}"
             },
             "url": {
               "raw": "{{api_base_url}}/v1/route",
@@ -537,7 +537,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"model\": \"anthropic-model\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, I specified the model directly\"}\n  ]\n}"
+              "raw": "{\n  \"model\": \"anthropic-model\",\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Hello, I specified the model directly\"}\n  ],\n  \"metadata\": {\n    \"headers\": {\n      \"x-authz-user-id\": \"bob\",\n      \"x-authz-user-groups\": \"team-b\"\n    }\n  }\n}"
             },
             "url": {
               "raw": "{{api_base_url}}/v1/route",
