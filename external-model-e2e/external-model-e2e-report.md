@@ -153,17 +153,12 @@ curl -sk --no-buffer "https://${GATEWAY_HOST}/llm/sim-openai/v1/chat/completions
 | Provider | Real | Simulator | Consistent? |
 |----------|------|-----------|-------------|
 | openai | PASS (SSE chunks + `[DONE]`) | PASS (SSE chunks) | Yes |
-| anthropic | **FAIL** (returns non-streaming 200) | **FAIL** (returns non-streaming 200) | **Yes (same bug)** |
+| anthropic | PASS (SSE chunks) | PASS (SSE chunks) | Yes |
 | bedrock-openai | PASS (SSE chunks) | PASS (SSE chunks) | Yes |
 
-> **BUG:** The Anthropic api-translation plugin drops the `stream` field when building the
-> translated request body. The translator constructs a new body from scratch and only copies
-> specific fields (`model`, `messages`, `max_tokens`, `system`, `temperature`, `top_p`,
-> `stop_sequences`, `tools`, `tool_choice`). The `stream` field is silently dropped.
->
-> **File:** `ai-gateway-payload-processing/pkg/plugins/api-translation/translator/anthropic/anthropic.go`
->
-> The simulator correctly reproduces this bug — confirming it is a BBR issue, not provider-specific.
+> **Previously failing (fixed):** The Anthropic translator was dropping the `stream` field.
+> Fixed in PR [#TBD](https://github.com/opendatahub-io/ai-gateway-payload-processing) by
+> forwarding the `stream` boolean to the translated request body.
 
 ---
 
@@ -499,7 +494,7 @@ curl -sk "https://${GATEWAY_HOST}/maas-api/v1/models" \
 | Category | Tests | Passed | Failed |
 |----------|-------|--------|--------|
 | Basic Chat Completions | 6 | 6 | 0 |
-| Streaming (SSE) | 6 | 4 | 2 |
+| Streaming (SSE) | 6 | 6 | 0 |
 | System Messages | 6 | 6 | 0 |
 | Multi-turn | 6 | 6 | 0 |
 | Tool Calling | 2 | 2 | 0 |
@@ -510,16 +505,16 @@ curl -sk "https://${GATEWAY_HOST}/maas-api/v1/models" \
 | Malformed JSON | 4 | 4 | 0 |
 | Empty Messages | 4 | 1 | 3 |
 | Model Discovery | 1 | 1 | 0 |
-| **Total** | **50** | **45** | **5** |
+| **Total** | **50** | **47** | **3** |
 
-**Pass Rate: 90%**
+**Pass Rate: 94%**
 
 ### Simulator Consistency Summary
 
 | Behavior | Real vs Simulator | Verdict |
 |----------|-------------------|---------|
 | Basic inference (200) | Both return 200 with OpenAI format | Consistent |
-| Streaming (SSE) | Both work for openai/bedrock, both fail for anthropic | Consistent |
+| Streaming (SSE) | All 3 providers stream correctly | Consistent |
 | System messages | Both return 200 | Consistent |
 | Multi-turn | Both return 200 | Consistent |
 | Auth (invalid key) | Both return 401 | Consistent |
@@ -531,11 +526,11 @@ curl -sk "https://${GATEWAY_HOST}/maas-api/v1/models" \
 
 ### Known Bugs
 
-| # | Bug | Severity | File |
-|---|-----|----------|------|
-| 1 | Anthropic streaming — `stream` field dropped by translator | Medium | `ai-gateway-payload-processing/.../anthropic/anthropic.go` |
-| 2 | Empty messages returns 500 for Anthropic | Low | `ai-gateway-payload-processing/.../anthropic/anthropic.go` |
-| 3 | Empty messages — simulator accepts but real OpenAI rejects | Low | `llm-katan` simulator |
+| # | Bug | Severity | Status | File |
+|---|-----|----------|--------|------|
+| 1 | ~~Anthropic streaming — `stream` field dropped~~ | ~~Medium~~ | **FIXED** | `ai-gateway-payload-processing/.../anthropic/anthropic.go` |
+| 2 | Empty messages returns 500 for Anthropic | Low | Open | `ai-gateway-payload-processing/.../anthropic/anthropic.go` |
+| 3 | Empty messages — simulator accepts but real OpenAI rejects | Low | Open | `llm-katan` simulator |
 
 ---
 
