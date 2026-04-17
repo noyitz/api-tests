@@ -52,6 +52,7 @@ export API_KEY="<RETURNED_KEY>"
 | `sim-openai` | openai | Simulator (llm-katan) | sim-openai | Simulates OpenAI provider |
 | `sim-anthropic` | anthropic | Simulator (llm-katan) | sim-anthropic | Simulates Anthropic provider |
 | `sim-bedrock` | bedrock-openai | Simulator (llm-katan) | sim-bedrock | Simulates Bedrock provider |
+| `facebook-opt-125m-simulated` | (internal) | KServe pod (cluster-local) | N/A | Internal LLMInferenceService model |
 
 ---
 
@@ -88,8 +89,7 @@ curl -sk "https://${GATEWAY_HOST}/llm/ext-bedrock/v1/chat/completions" \
   -H "Content-Type: application/json" \
   -d '{"model":"openai.gpt-oss-20b","messages":[{"role":"user","content":"Say hello in one word."}],"max_tokens":10}'
 
-# Simulator — replace model name and path accordingly:
-# sim-openai / sim-anthropic / sim-bedrock
+# Simulator — replace model name and path:  sim-openai / sim-anthropic / sim-bedrock
 curl -sk "https://${GATEWAY_HOST}/llm/sim-openai/v1/chat/completions" \
   -H "Authorization: Bearer ${API_KEY}" \
   -H "Content-Type: application/json" \
@@ -103,6 +103,10 @@ curl -sk "https://${GATEWAY_HOST}/llm/sim-openai/v1/chat/completions" \
 | openai | PASS (200, `stop`, content="Hello!") | PASS (200, `stop`, echo response) | Yes |
 | anthropic | PASS (200, `stop`, content="Hello!") | PASS (200, `stop`, echo response) | Yes |
 | bedrock-openai | PASS (200, `length`, reasoning model) | PASS (200, `stop`, echo response) | Yes |
+
+> **Note:** The `model` field in the request body must match the ExternalModel's `targetModel`
+> exactly. For simulator models use the model name (e.g., `sim-openai`), for real models use
+> the provider model ID (e.g., `gpt-4o-mini`).
 
 ---
 
@@ -482,10 +486,9 @@ curl -sk "https://${GATEWAY_HOST}/maas-api/v1/models" \
 | sim-openai | ExternalModel | True |
 | sim-anthropic | ExternalModel | True |
 | sim-bedrock | ExternalModel | True |
-| ext-simulator | ExternalModel | True |
 | facebook-opt-125m-simulated | LLMInferenceService | True |
 
-**Total models: 8** — PASS
+**Total models: 7** — PASS
 
 ---
 
